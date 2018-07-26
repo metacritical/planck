@@ -263,6 +263,10 @@ void dump_sdk(char* target_path) {
     }
 }
 
+void process_compile_opts(char* compile_opts) {
+
+}
+
 bool should_ignore_arg(const char *opt) {
     if (opt[0] != '-') {
         return false;
@@ -394,6 +398,7 @@ int main(int argc, char **argv) {
             {"compile",          no_argument,       NULL, 'Z'},
             {"init",             required_argument, NULL, 'i'},
             {"main",             required_argument, NULL, 'm'},
+            {"compile-opts",     required_argument, NULL, 'C'},
 
             // development options
             {"javascript",       no_argument,       NULL, 'j'},
@@ -409,6 +414,8 @@ int main(int argc, char **argv) {
     while (!did_encounter_main_opt &&
            (opt = getopt_long(index_of_script_path_or_hyphen, argv, "O:Xh?VS:D:L:lvrA:sfak:je:t:n:dc:o:Ki:qm:", long_options, &option_index)) != -1) {
         switch (opt) {
+            case 'C':
+                process_compile_opts(optarg);
             case 'X':
                 init_launch_timing();
                 break;
